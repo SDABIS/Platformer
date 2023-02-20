@@ -21,7 +21,7 @@ public class Throwable : MonoBehaviour
     [HideInInspector] public UnityEvent OnThrowableDestroy;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         initialDirection = initialDirection.normalized;
     }
 

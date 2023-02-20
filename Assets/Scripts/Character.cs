@@ -21,9 +21,9 @@ public class Character : MonoBehaviour
     }
 
     protected virtual void Start() {
-        this.characterUI = GetComponent<CharacterUI>();
+        /*this.characterUI = GetComponent<CharacterUI>();
         characterUI.SetMaxHealth(maxHealth);
-        CurrentHealth = maxHealth;
+        CurrentHealth = maxHealth;*/
 
         this.rb = GetComponent<Rigidbody2D>();   
         this.animator = GetComponent<Animator>();  

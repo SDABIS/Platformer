@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinBlock : MonoBehaviour
 {
-    private Coin coinPrefab;
+    [SerializeField] Coin coinPrefab;
 
     // Start is called before the first frame update
     void Start()

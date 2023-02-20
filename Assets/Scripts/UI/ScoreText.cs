@@ -9,12 +9,12 @@ public class ScoreText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scoreText.text = "Score: 0";
+        scoreText.text = "Monedas: 0";
     }
 
     // Update is called once per frame
     public void UpdateScore(int score)
     {
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Monedas: " + score;
     }
 }

@@ -35,7 +35,7 @@ public class PlayerController : Character
     protected override void Start()
     {
         base.Start();
-        score = 200001;
+        score = 0;
     }
 
     private void HandleEnemyKill(int exp) {
