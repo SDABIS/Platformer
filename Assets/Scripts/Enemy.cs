@@ -60,6 +60,7 @@ public class Enemy : Character
 
         animator.SetTrigger("isDead");
         GetComponent<Collider2D>().enabled = false;
+        //UIManager.Instance.UpdateScore(1);
 
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;

@@ -35,20 +35,7 @@ public class PlayerController : Character
     // Start is called before the first frame update
     protected override void Start()
     {
-        base.Start();
-        
-        throwablePrefabs = new Dictionary<string, Throwable>();
-
-        for(int i = 0; i<throwablePrefabsList.Count; i++) {
-            Throwable item = throwablePrefabsList[i];
-            throwablePrefabs.Add(item.Id, item);
-        }
-
-        currentThrowable = throwablePrefabsList[0];
-        EventBroker.Instance.OnEnemyKill.AddListener(HandleEnemyKill);
-
-        stats = new CharacterStats(5, 5);
-        inventory = new CharacterInventory(20);
+        base.Start()
         
     }
 
@@ -132,7 +119,7 @@ public class PlayerController : Character
         Throwable newThrow = Instantiate(currentThrowable, this.transform.position, Quaternion.identity);
         newThrow.Damage += stats.Strength;
         actualThrowables++;
-
+        UIManager.Instance.UpdateScore(1);
         if(!isFacingRight) newThrow.TurnDirection();
         newThrow.OnThrowableDestroy.AddListener(HandleThrowableDestroy);
     }
