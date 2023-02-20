@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class PlayerController : Character
 {
@@ -17,13 +19,6 @@ public class PlayerController : Character
 
     [SerializeField] float speed = 5.0f;
     [SerializeField] float stunTime = 1.0f;
-    
-    [Header("Throwables")]
-    [SerializeField] int maxThrowables = 2;
-    private int actualThrowables = 0;
-    [SerializeField] List<Throwable> throwablePrefabsList;
-    private Dictionary<string, Throwable> throwablePrefabs;
-    private Throwable currentThrowable;
 
     [Header("Jump")]
     [SerializeField] int airJumps = 1;
@@ -32,11 +27,15 @@ public class PlayerController : Character
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] Transform groundCheck;
 
+    [System.Serializable] public class EventZPress : UnityEvent<int> { }
+    public EventZPress OnZPress;
+    private int score;
+
     // Start is called before the first frame update
     protected override void Start()
     {
-        base.Start()
-        
+        base.Start();
+        score = 200001;
     }
 
     private void HandleEnemyKill(int exp) {
@@ -60,7 +59,7 @@ public class PlayerController : Character
         if(isStunned) return;
         Move();
         Jump();
-        Throw();
+        Buy();
     }
 
     private void Jump()
@@ -113,20 +112,12 @@ public class PlayerController : Character
         isFacingRight = direction == 1;
     }
 
-    void Throw() {
+    void Buy() {
         if(!Input.GetKeyDown(KeyCode.Z)) return;
-        if(actualThrowables >= maxThrowables) return;
-        Throwable newThrow = Instantiate(currentThrowable, this.transform.position, Quaternion.identity);
-        newThrow.Damage += stats.Strength;
-        actualThrowables++;
-        UIManager.Instance.UpdateScore(1);
-        if(!isFacingRight) newThrow.TurnDirection();
-        newThrow.OnThrowableDestroy.AddListener(HandleThrowableDestroy);
+        //Debug.Log("Invoking");
+        OnZPress.Invoke(score);
     }
 
-    void HandleThrowableDestroy() {
-        actualThrowables--;
-    }
 
     public void Hurt(float damage) {
         if(isStunned) return;
@@ -155,5 +146,11 @@ public class PlayerController : Character
         stats.EquipItem(item);
 
         return true;
+    }
+
+    public void AddCoin(int amount)
+    {
+        score += amount;
+        UIManager.Instance.UpdateScore(score);
     }
 }
